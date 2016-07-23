@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 
+import { updateCode } from '../actions/index';
+
 export class InputScreen extends Component {
 
   constructor(props) {
@@ -11,13 +13,9 @@ export class InputScreen extends Component {
     this.state = {
       code: '\n\n\n\n\n\n\n\n\n',
       options: {
-        mode: 'javascript',
-        tabSize: 2,
         autofocus: true,
-        lineNumbers: true,
       },
     };
-    this.setHeight = this.setHeight.bind(this);
   }
 
   componentDidMount() {
@@ -33,13 +31,13 @@ export class InputScreen extends Component {
 
   render() {
     this.setHeight();
-
+    const options = Object.assign(this.state.options, this.props.options.codemirror);
     return (
       <div id="inputscreen">
         <CodeMirror
-          value={this.state.code}
-          onChange={code => this.setState({ code })}
-          options={this.state.options}
+          value={this.props.displays.code}
+          onChange={code => this.props.updateCode(code)}
+          options={options}
         />
       </div>
     );
@@ -47,9 +45,9 @@ export class InputScreen extends Component {
 
 }
 
-function mapStateToProps(state) {
-  return { state };
+function mapStateToProps({ displays, options }) {
+  return { displays, options };
 }
 
-export default connect(mapStateToProps, { })(InputScreen);
+export default connect(mapStateToProps, { updateCode })(InputScreen);
 

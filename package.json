@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "compression": "^1.6.2",
+    "esprima": "^2.7.2",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
     "react": "^15.2.1",
