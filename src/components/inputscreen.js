@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 
-class InputScreen extends Component {
+export class InputScreen extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      code: '// test code',
+      code: '\n\n\n\n\n\n\n\n\n',
       options: {
         mode: 'javascript',
         tabSize: 2,
@@ -17,32 +17,28 @@ class InputScreen extends Component {
         lineNumbers: true,
       },
     };
+    this.setHeight = this.setHeight.bind(this);
   }
 
   componentDidMount() {
-    this.setCodeMirrorHeight();
+    this.setHeight();
   }
 
-  setCodeMirrorHeight() {
+  setHeight() {
     const codeBlocks = [].slice.call(document.getElementsByClassName('CodeMirror'));
-    if (codeBlocks.length > 0) {
-      codeBlocks[0].style.height = `${this.props.height - 5}px`;
-      codeBlocks[0].style.width = `${this.props.width - 5}px`;
-    }
-  }
-
-  updateCode(code) {
-    this.setState({ code });
+    codeBlocks.forEach(block => {
+      block.style.height = `${this.props.height - 5}px`;
+    });      
   }
 
   render() {
-    this.setCodeMirrorHeight();
+    this.setHeight();
 
     return (
       <div id="inputscreen">
         <CodeMirror
           value={this.state.code}
-          onChange={this.updateCode}
+          onChange={code => this.setState({ code })}
           options={this.state.options}
         />
       </div>
@@ -56,3 +52,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { })(InputScreen);
+
