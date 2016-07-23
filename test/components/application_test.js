@@ -36,10 +36,10 @@ describe('Application' , () => {
     expect(component.first().find('#app-container')).to.have.length(1);
   });
 
-  it('renders a Navbar', () => {
-    expect(component).to.exist;
-    expect(component.find(Navbar)).to.have.length(1);
-  });
+  // it('renders a Navbar', () => {
+  //   expect(component).to.exist;
+  //   expect(component.find(Navbar)).to.have.length(1);
+  // });
 
   it('renders an InputScreen', () => {
     expect(component.find(InputScreen)).to.have.length(1);
@@ -48,11 +48,6 @@ describe('Application' , () => {
   it('renders a ResultScreen', () => {
     expect(component).to.exist;
     expect(component.find(ResultScreen)).to.have.length(1);
-  });
-
-  it('renders a ErrorScreen', () => {
-    expect(component).to.exist;
-    expect(component.find(ErrorScreen)).to.have.length(1);
   });
 
   it('renders a HistoryScreen', () => {
