@@ -13,10 +13,8 @@ class HistoryScreen extends Component {
 
   render() {
     return (
-      <div id="app-container" className="ugh" >
-        <div className="another">
-        test
-        </div>
+      <div id="historyscreen" >
+        history
       </div>
     );
   }

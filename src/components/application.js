@@ -18,8 +18,8 @@ class Application extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mainSplitWidth: '85%',
-      inputResultSplitWidth: '70%',
+      mainSplitWidth: window.innerHeight * 0.85,
+      inputResultSplitWidth: window.innerWidth * 0.75,
     };
   }
 
@@ -30,7 +30,7 @@ class Application extends Component {
         <div id="input-result-split-container">
           <SplitPane
             split="horizontal"
-            minSize="50"
+            minSize="200"
             defaultSize={mainSplitWidth}
             onChange={(size) => this.setState({ mainSplitWidth: size })}
           >
@@ -40,7 +40,7 @@ class Application extends Component {
               defaultSize={inputResultSplitWidth}
               onChange={(size) => this.setState({ inputResultSplitWidth: size })}
             >
-              <InputScreen />
+              <InputScreen height={mainSplitWidth} width={inputResultSplitWidth} />
               <ResultScreen />
             </SplitPane>
             <HistoryScreen />
