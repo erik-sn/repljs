@@ -5,7 +5,6 @@ const INITIAL_STATE = [];
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case UPDATE_HISTORY:
-      console.log(action.payload);
       if (!action.payload) {
         return state;
       }
