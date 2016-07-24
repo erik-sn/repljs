@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import HistoryItem from './historyitem';
+import { setDisplayHeight } from '../utility/resize_functions';
 
 class HistoryScreen extends Component {
 
@@ -12,11 +14,13 @@ class HistoryScreen extends Component {
   }
 
   render() {
+    const { height } = this.props;
+    setDisplayHeight('#historyscreen', height - 35);
     const items = this.props.history.map((item, i) => (
-      <div key={i} style={{ fontSize: '10px' }}>{item}</div>
+      <HistoryItem item={item} key={i} height={height} />
     ));
     return (
-      <div id="historyscreen" >
+      <div id="historyscreen" style={{ height }}>
         {items}
       </div>
     );

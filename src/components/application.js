@@ -30,7 +30,6 @@ class Application extends Component {
         <div id="input-result-split-container">
           <SplitPane
             split="horizontal"
-            minSize="200"
             defaultSize={mainSplitWidth}
             onChange={(size) => this.setState({ mainSplitWidth: size })}
           >
@@ -40,10 +39,10 @@ class Application extends Component {
               defaultSize={inputResultSplitWidth}
               onChange={(size) => this.setState({ inputResultSplitWidth: size })}
             >
-              <InputScreen height={mainSplitWidth} width={inputResultSplitWidth} />
-              <ResultScreen />
+              <InputScreen height={mainSplitWidth} />
+              <ResultScreen height={mainSplitWidth} />
             </SplitPane>
-            <HistoryScreen />
+            <HistoryScreen height={window.innerHeight - mainSplitWidth} />
           </SplitPane>
         </div>
       </div>

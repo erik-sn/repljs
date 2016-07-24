@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
-import _ from 'lodash';
+
 import { updateCode, updateHistory } from '../actions/index';
+import { setDisplayHeight } from '../utility/resize_functions';
 
 export class InputScreen extends Component {
 
@@ -20,28 +22,22 @@ export class InputScreen extends Component {
   }
 
   componentDidMount() {
-    this.setHeight();
-  }
-
-  setHeight() {
-    const codeBlocks = [].slice.call(document.getElementsByClassName('CodeMirror'));
-    codeBlocks.forEach(block => {
-      block.style.height = `${this.props.height - 5}px`;
-    });      
+    setDisplayHeight('#inputscreen', this.props.height);
   }
 
   render() {
-    this.setHeight();
-    const options = Object.assign(this.state.options, this.props.options.codemirror);
+    setDisplayHeight('#inputscreen', this.props.height);
+    const { options, updateHistoryDebounced } = this.state;
+    const mirrorOptions = Object.assign(options, this.props.options.codemirror);
     return (
       <div id="inputscreen">
         <CodeMirror
           value={this.props.displays.code}
           onChange={(code) => {
             this.props.updateCode(code);
-            this.state.updateHistoryDebounced(code);
+            updateHistoryDebounced(code);
           }}
-          options={options}
+          options={mirrorOptions}
         />
       </div>
     );

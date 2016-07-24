@@ -8,10 +8,10 @@ import sinon from 'sinon';
 
 import HistoryScreen from '../../src/components/historyscreen';
 
-describe('History Screen' , () => {
+describe('History Screen', () => {
   let store;
   let component;
-  const props = {};
+  const props = { height: 50 };
   const state = {};
 
   const mockStore = configureMockStore([thunk]);

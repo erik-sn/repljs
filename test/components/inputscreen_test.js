@@ -13,14 +13,17 @@ describe('Input Screen' , () => {
   let store;
   let component;
 
-  const setHeight = sinon.spy(InputScreen.prototype, 'setHeight');
-  const updateCode = sinon.spy(() => 'redux test');
-  const displays = { code: 'test' }
-  const options = { codemirror: { mode: 'javascript'}};
-  const props = { height: 60, updateCode, displays, options };
+  const updateCode = sinon.spy(() => 'redux test update code');
+  const updateHistory = sinon.spy(() => 'redux test update history');
+  const updateHistoryDebounced = sinon.spy(() => 'redux test update history debounced');
+  const displays = { code: 'test' };
+  const options = { codemirror: { mode: 'javascript' }};
+
+  const props = { height: 60, updateCode, updateHistory, displays, options };
 
   const state = {
     code: '\n\n\n\n\n\n\n\n\n',
+    updateHistoryDebounced,
     options: {
       autofocus: true,
     },
@@ -50,15 +53,9 @@ describe('Input Screen' , () => {
     expect(component.find(CodeMirror)).to.have.length(1);
   });
 
-  it('calls the redux action creator updateCode when a change occurs', () => {
+  it('calls the redux action creators when a change occurs', () => {
     expect(updateCode.callCount).to.equal(0);
     component.find(CodeMirror).simulate('change');
     expect(updateCode.callCount).to.equal(1);
   });
-
-
-
-  
-
-
 });
