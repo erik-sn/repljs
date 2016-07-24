@@ -16,9 +16,7 @@ describe('History Screen' , () => {
 
   const mockStore = configureMockStore([thunk]);
   const storeStateMock = {
-    myReducer: {
-      someState: 'ABC',
-    },
+    history: ['item1', 'item2', 'item3\nitem4'],
   };
 
   beforeEach(() => {

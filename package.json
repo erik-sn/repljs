@@ -52,6 +52,7 @@
     "compression": "^1.6.2",
     "esprima": "^2.7.2",
     "express": "^4.14.0",
+    "lodash": "^4.13.1",
     "morgan": "^1.7.0",
     "react": "^15.2.1",
     "react-codemirror": "^0.2.6",

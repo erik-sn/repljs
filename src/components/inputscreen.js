@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
-
-import { updateCode } from '../actions/index';
+import _ from 'lodash';
+import { updateCode, updateHistory } from '../actions/index';
 
 export class InputScreen extends Component {
 
@@ -12,6 +12,7 @@ export class InputScreen extends Component {
     super(props);
     this.state = {
       code: '\n\n\n\n\n\n\n\n\n',
+      updateHistoryDebounced: _.debounce(this.props.updateHistory, 2500),
       options: {
         autofocus: true,
       },
@@ -36,7 +37,10 @@ export class InputScreen extends Component {
       <div id="inputscreen">
         <CodeMirror
           value={this.props.displays.code}
-          onChange={code => this.props.updateCode(code)}
+          onChange={(code) => {
+            this.props.updateCode(code);
+            this.state.updateHistoryDebounced(code);
+          }}
           options={options}
         />
       </div>
@@ -49,5 +53,7 @@ function mapStateToProps({ displays, options }) {
   return { displays, options };
 }
 
-export default connect(mapStateToProps, { updateCode })(InputScreen);
+
+
+export default connect(mapStateToProps, { updateCode, updateHistory })(InputScreen);
 

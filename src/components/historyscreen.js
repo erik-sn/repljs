@@ -12,17 +12,20 @@ class HistoryScreen extends Component {
   }
 
   render() {
+    const items = this.props.history.map((item, i) => (
+      <div key={i} style={{ fontSize: '10px' }}>{item}</div>
+    ));
     return (
       <div id="historyscreen" >
-        history
+        {items}
       </div>
     );
   }
 
 }
 
-function mapStateToProps(state) {
-  return { state };
+function mapStateToProps({ history }) {
+  return { history };
 }
 
 export default connect(mapStateToProps, { })(HistoryScreen);
