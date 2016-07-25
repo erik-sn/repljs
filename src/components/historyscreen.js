@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { findDOMNode } from 'react-dom';
 
 import HistoryItem from './historyitem';
+// import ReactList from 'react-list';
+import ReactList from 'react-list';
 import { setDisplayHeight } from '../utility/resize_functions';
 import { updateCode } from '../actions/index';
 
@@ -14,25 +17,32 @@ class HistoryScreen extends Component {
     };
   }
 
-  setActiveCode(code) {
-    console.log(code);
+  componentDidMount() {
+
+    const node = findDOMNode(this);
+    console.log(node);
+  }
+
+  componentDidUpdate() {
+    const { history } = this.props;
+    const node = findDOMNode(this);
+    node.scrollLeft = history.length * 175;
   }
 
   render() {
-    const { height } = this.props;
+    const { height, history, updateCode } = this.props;
     setDisplayHeight('#historyscreen', height - 35);
-    const children = this.props.history.map((item, i) => (
-      <HistoryItem item={item} key={i} height={height} click={() => this.props.updateCode(item)} />
+
+    const children = history.map((item, index) => (
+      <HistoryItem item={item} key={index} height={height} click={() => updateCode(history[index])} />
     ));
+
     return (
-      <div id="historyscreen" style={{ height }}>
-        <div id="history-item-container">
-          {children}
-        </div>
+      <div id="item-list-container" style={{ height }}>
+        {children}
       </div>
     );
   }
-
 }
 
 function mapStateToProps({ history }) {
