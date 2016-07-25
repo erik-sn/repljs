@@ -78,13 +78,14 @@
   width: 175px;
   font-size: 8px;
   flex: 0 0 auto;
-  padding: 3px;
+  padding: 6px 3px;
   margin: 0px 3px;
+  transition: transform 0.75s ease-in-out;
 
   .CodeMirror {
     @include noSelect();
     margin: 0px 5px;
-    padding: 3px;
+    padding: 6px 3px;
     cursor: pointer !important;
     overflow-y: hidden;
   }
@@ -103,6 +104,10 @@
 }
 
 .history-item:hover {
-    @include blur(15px, 0.5);
-    border: 1px solid #999;
+  transform: scale(1.05, 1.05);
+  transition: transform 0.25s ease-in-out;
+}
+
+.history-item-active {
+  background-color: #333;
 }

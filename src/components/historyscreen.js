@@ -12,8 +12,10 @@ class HistoryScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      activeIndex: props.history.length - 1,
     };
+    this.updateActiveIndex = this.updateActiveIndex.bind(this);
+    this.updateCode = this.updateCode.bind(this);
   }
 
   componentDidMount() {
@@ -28,20 +30,44 @@ class HistoryScreen extends Component {
     node.scrollLeft = history.length * 175;
   }
 
+  renderHistory(history, height) {
+    return history.map((item, index) => {
+      const active = this.state.activeIndex === index;
+      return (
+        <HistoryItem active={active} item={item} key={index} click={() => this.updateCode(item, index)} />
+      );
+    });
+  }
+
+  updateCode(item, index) {
+    this.setState({ activeIndex: index }, () => this.props.updateCode(item));
+  }
+
+  updateActiveIndex(change) {
+    const { history, updateCode } = this.props;
+    const length = this.props.history.length - 1;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex + change;
+    if (newIndex >= 0 && newIndex <= length) {
+      this.setState({ activeIndex: newIndex }, () => updateCode(history[newIndex]));
+      const node = document.getElementById('item-list-container');
+      node.scrollTo(newIndex * 175);
+
+    }
+  }
+
   render() {
     const { height, history, updateCode } = this.props;
-    setDisplayHeight('#historyscreen', height - 35);
-    const children = history.map((item, index) => (
-      <HistoryItem item={item} key={index} height={height} click={() => updateCode(item)} />
-    ));
+    setDisplayHeight('#historyscreen', height - 73);
+    const historyItems = this.renderHistory(history, height);
 
     return (
       <div id="historyscreen">
-        <Icon name="arrow" content="<" click={() => console.log('test icon!')} />
+        <Icon name="arrow" content="<" click={() => this.updateActiveIndex(-1)} />
         <div id="item-list-container" style={{ height: `${height - 35}px` }}>
-          {children}
+          {historyItems}
         </div>
-        <Icon name="arrow" content=">" click={() => console.log('test icon!')} />
+        <Icon name="arrow" content=">" click={() => this.updateActiveIndex(1)} />
       </div>
     );
   }
