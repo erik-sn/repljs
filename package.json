@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "repljs",
   "version": "1.0.0",
-  "description": "React Boilerplate with support for Redux, Hot Reloading, Routing, Isomorphic rendering, ESLint and SASS",
+  "description": "REPL for javascript that maintains a history of the REPL's state",
   "main": "index.js",
   "repository": "",
   "scripts": {
@@ -61,9 +61,6 @@
     "react-list": "^0.7.20",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
-    "react-scroll-horizontal": "0.0.7",
-    "react-scrollbar": "^0.4.1",
-    "react-smooth-scrollbar": "^6.4.0",
     "react-split-pane-2": "^0.1.36",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
