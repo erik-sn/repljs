@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "REPL for javascript that maintains a history of the REPL's state",
   "main": "index.js",
-  "repository": "",
+  "repository": "https://github.com/kiresuah/repljs.git",
   "scripts": {
     "dev": "node server.js",
     "test:watch": "npm run test -- --watch",

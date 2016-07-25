@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import CodeMirror from 'react-codemirror';
-import 'codemirror/mode/javascript/javascript';
+import '../../lib/codemirror/mode/javascript/javascript';
 
 import { updateCode, updateHistory } from '../actions/index';
 import { setDisplayHeight } from '../utility/resize_functions';
