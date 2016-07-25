@@ -63,9 +63,11 @@
     "react-router": "^2.0.1",
     "react-scroll-horizontal": "0.0.7",
     "react-scrollbar": "^0.4.1",
+    "react-smooth-scrollbar": "^6.4.0",
     "react-split-pane-2": "^0.1.36",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
+    "smoothscroll": "^0.2.2",
     "webpack": "^1.12.9"
   }
 }

@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 
 import HistoryItem from './historyitem';
-// import ReactList from 'react-list';
-import ReactList from 'react-list';
+import Icon from './icon';
 import { setDisplayHeight } from '../utility/resize_functions';
 import { updateCode } from '../actions/index';
 
@@ -38,9 +37,11 @@ class HistoryScreen extends Component {
 
     return (
       <div id="historyscreen">
+        <Icon name="arrow" content="<" click={() => console.log('test icon!')} />
         <div id="item-list-container" style={{ height: `${height - 35}px` }}>
           {children}
         </div>
+        <Icon name="arrow" content=">" click={() => console.log('test icon!')} />
       </div>
     );
   }
