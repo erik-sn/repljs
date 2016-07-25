@@ -45,6 +45,7 @@
   @include blur(5px, 0.5);
   padding: 15px;
   display: flex;
+  background-color: #999;
 }
 
 .arrow-container {
@@ -78,6 +79,7 @@
   font-size: 8px;
   flex: 0 0 auto;
   padding: 3px;
+  margin: 0px 3px;
 
   .CodeMirror {
     @include noSelect();

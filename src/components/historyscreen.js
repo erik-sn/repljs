@@ -32,7 +32,7 @@ class HistoryScreen extends Component {
     const { height, history, updateCode } = this.props;
     setDisplayHeight('#historyscreen', height - 35);
     const children = history.map((item, index) => (
-      <HistoryItem item={item} key={index} height={height} click={() => updateCode(history[index])} />
+      <HistoryItem item={item} key={index} height={height} click={() => updateCode(item)} />
     ));
 
     return (

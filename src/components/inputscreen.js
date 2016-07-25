@@ -29,11 +29,14 @@ export class InputScreen extends Component {
     setDisplayHeight('#inputscreen', this.props.height);
     const { options, updateHistoryDebounced } = this.state;
     const mirrorOptions = Object.assign(options, this.props.options.codemirror);
+    const value = this.props.displays.code;
+    console.log(value.trim());
     return (
       <div id="inputscreen">
         <CodeMirror
-          value={this.props.displays.code}
+          value={value}
           onChange={(code) => {
+            console.log('change');
             this.props.updateCode(code);
             updateHistoryDebounced(code);
           }}
