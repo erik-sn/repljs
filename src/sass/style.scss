@@ -62,17 +62,30 @@
   width: 175px;
   font-size: 8px;
   flex: 0 0 auto;
-  
+  padding: 3px;
+
   .CodeMirror {
     @include noSelect();
+    margin: 0px 5px;
+    padding: 3px;
     cursor: pointer !important;
+    overflow-y: hidden;
   }
 
-  .CodeMirror:hover {
-    border: 1px solid #999;
+  .CodeMirror-hscrollbar {
+    display: none !important;
+  }
+
+  .CodeMirror-vscrollbar {
+    display: none !important;
   }
   
   .CodeMirror-line {
     cursor: pointer !important;
   }
+}
+
+.history-item:hover {
+    @include blur(15px, 0.5);
+    border: 1px solid #999;
 }

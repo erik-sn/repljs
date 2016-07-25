@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   codemirror: {
-    mode: 'jsx',
+    mode: 'javascript',
     tabSize: 2,
     lineNumbers: true,
   },

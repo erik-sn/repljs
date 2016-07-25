@@ -17,7 +17,6 @@ export class InputScreen extends Component {
       updateHistoryDebounced: _.debounce(this.props.updateHistory, 2000),
       options: {
         autofocus: true,
-        showHistory: false,
       },
     };
   }

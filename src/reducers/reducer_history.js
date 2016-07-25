@@ -11,7 +11,7 @@ export default function (state = INITIAL_STATE, action) {
       // check to see if there is a non-trivial change to update history
       if (state.length > 0) {
         const diff = action.payload.trim().length - state[state.length - 1].trim().length;
-        if (Math.abs(diff) < 5) {
+        if (Math.abs(diff) < 3) {
           return state;
         }
       }

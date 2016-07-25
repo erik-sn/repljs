@@ -17,9 +17,15 @@ class HistoryScreen extends Component {
     };
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     const { history } = this.props;
     const node = findDOMNode(this);
+    node.scrollLeft = history.length * 175;
+  }
+
+  componentDidUpdate() {
+    const { history } = this.props;
+    const node = document.getElementById('item-list-container');
     node.scrollLeft = history.length * 175;
   }
 
@@ -31,8 +37,10 @@ class HistoryScreen extends Component {
     ));
 
     return (
-      <div id="item-list-container" style={{ height }}>
-        {children}
+      <div id="historyscreen">
+        <div id="item-list-container" style={{ height: `${height - 35}px` }}>
+          {children}
+        </div>
       </div>
     );
   }
