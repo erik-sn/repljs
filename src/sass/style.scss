@@ -10,6 +10,12 @@
   box-shadow:         0px 0px $distance 0px rgba(22, 22, 22, $opacity);
 }
 
+@mixin noSelect() {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 @mixin center() {
   position: absolute;
   top: 0;
@@ -46,12 +52,27 @@
   flex-wrap: nowrap;
   max-width: 100vw;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
+/* Individual History Items */
 .history-item {
   width: 175px;
   font-size: 8px;
   flex: 0 0 auto;
+  
+  .CodeMirror {
+    @include noSelect();
+    cursor: pointer !important;
+  }
+
+  .CodeMirror:hover {
+    border: 1px solid #999;
+  }
+  
+  .CodeMirror-line {
+    cursor: pointer !important;
+  }
 }

@@ -14,7 +14,7 @@ export class InputScreen extends Component {
     super(props);
     this.state = {
       code: '\n\n\n\n\n\n\n\n\n',
-      updateHistoryDebounced: _.debounce(this.props.updateHistory, 100),
+      updateHistoryDebounced: _.debounce(this.props.updateHistory, 2000),
       options: {
         autofocus: true,
         showHistory: false,
