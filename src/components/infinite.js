@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
+import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
+import HistoryItem from './historyitem';
 
 class Infinite extends Component {
 
@@ -30,6 +32,11 @@ class Infinite extends Component {
     this.setState(this.getDefaultState(nextProps), () => this.scrollState(this.state.scroll));    
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+    // return (nextProps.records.length !== this.props.records.length)
+  }
+
   scrollState(scroll) {
     const { recordWidth, recordsPerBody, total } = this.state;
 
@@ -46,21 +53,25 @@ class Infinite extends Component {
     this.scrollState(ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft);
   }
 
+  filterRecords(records, start, end) {
+    if (!start || ! end) {
+      return records;
+    }
+    return records.filter((item, index) => index >= Math.floor(start) && index <= Math.ceil(end));
+  }
+
   render() {
     const { records, recordWidth, height } = this.props;
-    const { visibleStart, visibleEnd, displayStart, displayEnd, scroll, total } = this.state;
+    const { displayStart, displayEnd, total } = this.state;
+    const filteredItems = this.filterRecords(records, displayStart, displayEnd);
     return (
       <div id="item-list-container" onScroll={this.onScroll} style={{ height }} ref="scrollable" >
-        <div className="history-item" style={{ width: displayStart * recordWidth }} />
-        {records.filter((item, index) => index >= Math.floor(displayStart) && index <= Math.ceil(displayEnd))}
-        <div className="history-item" style={{ width: (total - displayEnd - 1) * recordWidth }} />
+        <div className="history-item" style={{ width: displayStart ? displayStart * recordWidth : '0px' }} />
+        {filteredItems}
+        <div className="history-item" style={{ width: displayEnd ? (total - displayEnd - 1) * recordWidth : '0px' }} />
       </div>
     );
   }
 }
 
 export default Infinite;
-
-
-        // <div className="history-item" style={{ width: (visibleStart - displayStart) * recordWidth }} />
-        // <div className="history-item" style={{ width: (displayEnd - displayStart) * recordWidth }} />
