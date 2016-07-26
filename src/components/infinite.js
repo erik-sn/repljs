@@ -37,15 +37,14 @@ class Infinite extends Component {
     // return (nextProps.records.length !== this.props.records.length)
   }
 
-  scrollState(scroll) {
+  scrollState(scroll = ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft) {
     const { recordWidth, recordsPerBody, total } = this.state;
 
     const visibleStart = Math.floor(scroll / recordWidth);
     const visibleEnd = Math.min(visibleStart + recordsPerBody, total - 1);
 
-    const displayStart = Math.max(0, Math.floor(scroll / recordWidth) - recordsPerBody * 1.5);
-    const displayEnd = Math.min(displayStart + 3 * recordsPerBody, total - 1);
-
+    const displayStart = Math.max(0, Math.floor(scroll / recordWidth) - recordsPerBody * 0.5);
+    const displayEnd = Math.min(displayStart + 2 * recordsPerBody, total - 1);
     this.setState({ visibleStart, visibleEnd, displayStart, displayEnd, scroll });
   }
 
@@ -54,18 +53,19 @@ class Infinite extends Component {
   }
 
   filterRecords(records, start, end) {
-    if (!start || ! end) {
+    if (!start && !end) {
       return records;
     }
-    return records.filter((item, index) => index >= Math.floor(start) && index <= Math.ceil(end));
+    return records.slice(start, end + 1);
   }
 
   render() {
-    const { records, recordWidth, height } = this.props;
+    const { records, recordWidth } = this.props;
     const { displayStart, displayEnd, total } = this.state;
+    console.log(total);
     const filteredItems = this.filterRecords(records, displayStart, displayEnd);
     return (
-      <div id="item-list-container" onScroll={this.onScroll} style={{ height }} ref="scrollable" >
+      <div id="item-list-container" onScroll={this.onScroll} ref="scrollable" >
         <div className="history-item" style={{ width: displayStart ? displayStart * recordWidth : '0px' }} />
         {filteredItems}
         <div className="history-item" style={{ width: displayEnd ? (total - displayEnd - 1) * recordWidth : '0px' }} />
