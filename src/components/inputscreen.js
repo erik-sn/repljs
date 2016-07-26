@@ -34,7 +34,6 @@ export class InputScreen extends Component {
         <CodeMirror
           value={this.props.displays.code}
           onChange={(code) => {
-            console.log('change');
             this.props.updateCode(code);
             updateHistoryDebounced(code);
           }}

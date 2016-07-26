@@ -4,6 +4,8 @@ import { findDOMNode } from 'react-dom';
 
 import HistoryItem from './historyitem';
 import Icon from './icon';
+import Infinite from './infinite';
+
 import { setDisplayHeight } from '../utility/resize_functions';
 import { updateCode } from '../actions/index';
 
@@ -12,7 +14,9 @@ class HistoryScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      newItem: false,
       activeIndex: props.history.length - 1,
+      width: window.innerWidth,
     };
     this.updateActiveIndex = this.updateActiveIndex.bind(this);
     this.updateCode = this.updateCode.bind(this);
@@ -20,14 +24,25 @@ class HistoryScreen extends Component {
 
   componentDidMount() {
     const { history } = this.props;
-    const node = findDOMNode(this);
+    const node = document.getElementById('item-list-container');
     node.scrollLeft = history.length * 175;
+    window.addEventListener('resize', (e) => this.setState({ width: window.innerWidth }));
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.history.length > this.props.history.length) {
+      this.setState({ newItem: true, activeIndex: newProps.history.length - 1 });
+    } else {
+      this.setState({ newItem: false });
+    }
   }
 
   componentDidUpdate() {
     const { history } = this.props;
     const node = document.getElementById('item-list-container');
-    node.scrollLeft = history.length * 175;
+    if (this.state.newItem) {
+      node.scrollLeft = history.length * 175;
+    }
   }
 
   renderHistory(history, height) {
@@ -51,8 +66,8 @@ class HistoryScreen extends Component {
     if (newIndex >= 0 && newIndex <= length) {
       this.setState({ activeIndex: newIndex }, () => updateCode(history[newIndex]));
       const node = document.getElementById('item-list-container');
-      node.scrollTo(newIndex * 175);
-
+      const width = node.scrollWidth;
+      node.scrollLeft = width * (newIndex / history.length);
     }
   }
 
@@ -60,13 +75,10 @@ class HistoryScreen extends Component {
     const { height, history, updateCode } = this.props;
     setDisplayHeight('#historyscreen', height - 73);
     const historyItems = this.renderHistory(history, height);
-
     return (
       <div id="historyscreen">
         <Icon name="arrow" content="<" click={() => this.updateActiveIndex(-1)} />
-        <div id="item-list-container" style={{ height: `${height - 35}px` }}>
-          {historyItems}
-        </div>
+        <Infinite recordWidth={189} height={height - 35} width={this.state.width * 0.88} records={historyItems} />
         <Icon name="arrow" content=">" click={() => this.updateActiveIndex(1)} />
       </div>
     );
