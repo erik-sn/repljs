@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
-import TransitionGroup from 'react/lib/ReactCSSTransitionGroup';
-
-import HistoryItem from './historyitem';
 
 class Infinite extends Component {
 
   constructor(props) {
     super(props);
     this.state = this.getDefaultState(props);
-    this.onScroll = this.onScroll.bind(this);
   }
 
   getDefaultState(props) {
@@ -34,8 +28,12 @@ class Infinite extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
-    // return (nextProps.records.length !== this.props.records.length)
   }
+
+  // onScroll() {
+  //   console.log('scrolling');
+  //   this.scrollState(ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft);
+  // }
 
   scrollState(scroll) {
     const { recordWidth, recordsPerBody, total } = this.state;
@@ -49,12 +47,8 @@ class Infinite extends Component {
     this.setState({ visibleStart, visibleEnd, displayStart, displayEnd, scroll });
   }
 
-  onScroll() {
-    this.scrollState(ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft);
-  }
-
   filterRecords(records, start, end) {
-    if (!start || ! end) {
+    if (!start || !end) {
       return records;
     }
     return records.filter((item, index) => index >= Math.floor(start) && index <= Math.ceil(end));
@@ -65,7 +59,7 @@ class Infinite extends Component {
     const { displayStart, displayEnd, total } = this.state;
     const filteredItems = this.filterRecords(records, displayStart, displayEnd);
     return (
-      <div id="item-list-container" onScroll={this.onScroll} style={{ height }} ref="scrollable" >
+      <div id="item-list-container" style={{ height }} ref="scrollable" >
         <div className="history-item" style={{ width: displayStart ? displayStart * recordWidth : '0px' }} />
         {filteredItems}
         <div className="history-item" style={{ width: displayEnd ? (total - displayEnd - 1) * recordWidth : '0px' }} />

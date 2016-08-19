@@ -21,10 +21,6 @@ export class InputScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    setDisplayHeight('#inputscreen', this.props.height);
-  }
-
   render() {
     setDisplayHeight('#inputscreen', this.props.height);
     const { options, updateHistoryDebounced } = this.state;
@@ -48,8 +44,6 @@ export class InputScreen extends Component {
 function mapStateToProps({ displays, options }) {
   return { displays, options };
 }
-
-
 
 export default connect(mapStateToProps, { updateCode, updateHistory })(InputScreen);
 

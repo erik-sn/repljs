@@ -1,6 +1,6 @@
 import { UPDATE_HISTORY } from '../actions/index';
 
-const INITIAL_STATE = [];
+const INITIAL_STATE = (JSON.parse(localStorage.getItem('repl-history')) || []);
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -8,14 +8,15 @@ export default function (state = INITIAL_STATE, action) {
       if (!action.payload) {
         return state;
       }
-      // check to see if there is a non-trivial change to update history
+      // check to see if there was a change in state
       if (state.length > 0) {
-        const diff = action.payload.trim().length - state[state.length - 1].trim().length;
-        if (Math.abs(diff) < 3) {
+        if (JSON.stringify(action.payload) === JSON.stringify(state[state])) {
           return state;
         }
       }
-      return state.concat([action.payload]);
+      const updatedState = state.concat([action.payload]);
+      localStorage.setItem('repl-history', JSON.stringify(updatedState));
+      return updatedState;
 
     default:
       return state;
