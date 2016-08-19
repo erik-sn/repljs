@@ -29,7 +29,6 @@ class Infinite extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return true;
   }
-
   // onScroll() {
   //   console.log('scrolling');
   //   this.scrollState(ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft);
@@ -41,9 +40,8 @@ class Infinite extends Component {
     const visibleStart = Math.floor(scroll / recordWidth);
     const visibleEnd = Math.min(visibleStart + recordsPerBody, total - 1);
 
-    const displayStart = Math.max(0, Math.floor(scroll / recordWidth) - recordsPerBody * 1.5);
-    const displayEnd = Math.min(displayStart + 3 * recordsPerBody, total - 1);
-
+    const displayStart = Math.max(0, Math.floor(scroll / recordWidth) - recordsPerBody * 0.5);
+    const displayEnd = Math.min(displayStart + 2 * recordsPerBody, total - 1);
     this.setState({ visibleStart, visibleEnd, displayStart, displayEnd, scroll });
   }
 
@@ -51,12 +49,13 @@ class Infinite extends Component {
     if (!start || !end) {
       return records;
     }
-    return records.filter((item, index) => index >= Math.floor(start) && index <= Math.ceil(end));
+    return records.slice(start, end + 1);
   }
 
   render() {
-    const { records, recordWidth, height } = this.props;
+    const { records, recordWidth } = this.props;
     const { displayStart, displayEnd, total } = this.state;
+    console.log(total);
     const filteredItems = this.filterRecords(records, displayStart, displayEnd);
     return (
       <div id="item-list-container" style={{ height }} ref="scrollable" >
