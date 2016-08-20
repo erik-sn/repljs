@@ -53,9 +53,8 @@ class Infinite extends Component {
   }
 
   render() {
-    const { records, recordWidth } = this.props;
+    const { height, records, recordWidth } = this.props;
     const { displayStart, displayEnd, total } = this.state;
-    console.log(total);
     const filteredItems = this.filterRecords(records, displayStart, displayEnd);
     return (
       <div id="item-list-container" style={{ height }} ref="scrollable" >

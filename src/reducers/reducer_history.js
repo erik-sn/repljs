@@ -8,11 +8,8 @@ function getInitialState() {
 export default function (state = getInitialState(), action) {
   switch (action.type) {
     case UPDATE_HISTORY:
-      if (!action.payload) {
-        return state;
-      }
       // check to see if there was a change in state
-      if (JSON.stringify(action.payload) === JSON.stringify(state[state])) {
+      if (!action.payload || JSON.stringify(action.payload) === JSON.stringify(state[state])) {
         return state;
       }
       const updatedState = state.concat([action.payload]);

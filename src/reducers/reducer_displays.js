@@ -15,7 +15,6 @@ export default function (state = getInitialState(), action) {
       if (!action.payload) {
         return state;
       }
-      localStorage.setItem('repl-inputCode', JSON.stringify(action.payload));
       return { code: action.payload, errors, result };
 
     default:
