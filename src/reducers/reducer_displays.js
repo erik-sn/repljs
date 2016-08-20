@@ -1,12 +1,14 @@
 import { UPDATE_CODE } from '../actions/index';
 
-const INITIAL_STATE = {
-  code: (JSON.parse(localStorage.getItem('repl-inputCode')) || '\n\n\n\n\n\n\n\n\n\n'),
-  errors: '',
-  result: '',
-};
+function getInitialState() {
+  return {
+    code: (JSON.parse(localStorage.getItem('repl-inputCode')) || '\n\n\n\n\n\n\n\n\n\n'),
+    errors: '',
+    result: '',
+  };
+}
 
-export default function (state = INITIAL_STATE, action) {
+export default function (state = getInitialState(), action) {
   const { code, errors, result } = state;
   switch (action.type) {
     case UPDATE_CODE:

@@ -7,10 +7,8 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
 import Application from '../../src/components/application';
-import Navbar from '../../src/components/navbar';
 import InputScreen from '../../src/components/inputscreen';
 import ResultScreen from '../../src/components/resultscreen';
-import ErrorScreen from '../../src/components/errorscreen';
 import HistoryScreen from '../../src/components/historyscreen';
 
 describe('Application' , () => {
@@ -35,11 +33,6 @@ describe('Application' , () => {
     expect(component).to.exist;
     expect(component.first().find('#app-container')).to.have.length(1);
   });
-
-  // it('renders a Navbar', () => {
-  //   expect(component).to.exist;
-  //   expect(component.find(Navbar)).to.have.length(1);
-  // });
 
   it('renders an InputScreen', () => {
     expect(component.find(InputScreen)).to.have.length(1);
