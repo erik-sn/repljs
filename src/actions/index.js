@@ -9,6 +9,7 @@ export function updateCode(code) {
 }
 
 export function updateHistory(code) {
+  console.log(code);
   return {
     type: UPDATE_HISTORY,
     payload: code,

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 class Infinite extends Component {
 
   constructor(props) {
     super(props);
     this.state = this.getDefaultState(props);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   getDefaultState(props) {
@@ -22,17 +24,21 @@ class Infinite extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.getDefaultState(nextProps), () => this.scrollState(this.state.scroll));    
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
+    console.log('scu infinite: ', this.props.records.length, nextProps.records.length)
+    if (this.state.displayStart !== nextState.displayStart ||
+        this.state.displayEnd !== nextState.displayEnd || 
+        this.props.activeIndex !== nextProps.activeIndex) {
+      return true;
+    } else if (this.props.records.length === nextProps.records.length) {
+      return false;
+    }
     return true;
   }
-  // onScroll() {
-  //   console.log('scrolling');
-  //   this.scrollState(ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft);
-  // }
+
+  onScroll() {
+    this.scrollState(ReactDOM.findDOMNode(this.refs.scrollable).scrollLeft);
+  }
 
   scrollState(scroll) {
     const { recordWidth, recordsPerBody, total } = this.state;
@@ -45,21 +51,21 @@ class Infinite extends Component {
     this.setState({ visibleStart, visibleEnd, displayStart, displayEnd, scroll });
   }
 
-  filterRecords(records, start, end) {
+  filterRecords(start, end) {
+    const { records, renderer, activeIndex } = this.props;
     if (!start || !end) {
-      return records;
+      return renderer(records, activeIndex);
     }
-    return records.slice(start, end + 1);
+    return renderer(records.slice(start, end + 1), activeIndex, start);
   }
 
   render() {
-    const { height, records, recordWidth } = this.props;
+    const { height, recordWidth } = this.props;
     const { displayStart, displayEnd, total } = this.state;
-    const filteredItems = this.filterRecords(records, displayStart, displayEnd);
     return (
-      <div id="item-list-container" style={{ height }} ref="scrollable" >
+      <div id="item-list-container" style={{ height }} onScroll={() => this.onScroll()} ref="scrollable" >
         <div className="history-item" style={{ width: displayStart ? displayStart * recordWidth : '0px' }} />
-        {filteredItems}
+          {this.filterRecords(displayStart, displayEnd)}
         <div className="history-item" style={{ width: displayEnd ? (total - displayEnd - 1) * recordWidth : '0px' }} />
       </div>
     );

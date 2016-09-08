@@ -21,13 +21,14 @@ class ResultScreen extends Component {
   }
 
   render() {
-    setDisplayHeight('#resultscreen', this.props.height);
-    const mirrorOptions = Object.assign(this.state.options, this.props.options.codemirror);
+    const { height, options, result, updateCode } = this.props;
+    setDisplayHeight('#resultscreen', height);
+    const mirrorOptions = Object.assign(this.state.options, options.codemirror);
     return (
       <div id="resultscreen">
         <CodeMirror
-          value={this.props.result}
-          onChange={code => this.props.updateCode(code)}
+          value={result}
+          onChange={code => updateCode(code)}
           options={mirrorOptions}
         />
       </div>

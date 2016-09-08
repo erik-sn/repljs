@@ -46,27 +46,27 @@ class HistoryScreen extends Component {
     }
   }
 
-  renderHistory(history) {
-    return history.map((item, index) => {
-      const active = this.state.activeIndex === index;
+  renderHistory(history, activeIndex) {
+    return history.map((item) => {
+      const active = item.index === activeIndex;
       return (
         <HistoryItem
-          key={index}
+          key={item.index}
+          item={item.code}
           active={active}
-          item={item}
-          click={() => this.updateCode(item, index)}
+          click={() => this.updateCode(item.code, item.index)}
         />
       );
     });
   }
 
-  updateCode(item, index) {
-    this.setState({ activeIndex: index }, () => this.props.updateCode(item));
+  updateCode(code, index) {
+    this.setState({ activeIndex: index }, () => this.props.updateCode(code));
   }
 
   updateActiveIndex(change) {
     const { history, updateCode } = this.props;
-    const length = this.props.history.length - 1;
+    const length = history.length - 1;
     const { activeIndex } = this.state;
     const newIndex = activeIndex + change;
     if (newIndex >= 0 && newIndex <= length) {
@@ -78,7 +78,8 @@ class HistoryScreen extends Component {
   }
 
   render() {
-    const { height, history, updateCode } = this.props;
+    const { height, history } = this.props;
+    const { activeIndex, width } = this.state;
     setDisplayHeight('#historyscreen', height - 73);
     return (
       <div id="historyscreen">
@@ -86,8 +87,10 @@ class HistoryScreen extends Component {
         <Infinite
           recordWidth={189}
           height={height - 35}
-          width={this.state.width * 0.88}
-          records={this.renderHistory(history)}
+          width={width * 0.88}
+          records={history}
+          renderer={this.renderHistory}
+          activeIndex={activeIndex}
         />
         <Icon name="arrow" content=">" click={() => this.updateActiveIndex(1)} />
       </div>

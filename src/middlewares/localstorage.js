@@ -7,7 +7,7 @@ export default function ({ dispatch }) {
         localStorage.setItem('repl-inputCode', JSON.stringify(action.payload));
         break;
       case UPDATE_HISTORY:
-        localStorage.setItem('repl-inputCode', JSON.stringify(action.payload));
+        localStorage.setItem('repl-history', JSON.stringify(action.payload));
         break;
     }
     next(action);

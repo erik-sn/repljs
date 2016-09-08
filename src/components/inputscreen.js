@@ -29,9 +29,9 @@ export class InputScreen extends Component {
       <div id="inputscreen">
         <CodeMirror
           value={this.props.displays.code}
-          onChange={(code) => {
+          onChange={code => {
             this.props.updateCode(code);
-            updateHistoryDebounced(code);
+            updateHistoryDebounced({ index: this.props.history.length, code });
           }}
           options={mirrorOptions}
         />
@@ -41,8 +41,9 @@ export class InputScreen extends Component {
 
 }
 
-function mapStateToProps({ displays, options }) {
-  return { displays, options };
+function mapStateToProps({ displays, options, history }) {
+  console.log('store: ', displays, options, history.length)
+  return { displays, options, history };
 }
 
 export default connect(mapStateToProps, { updateCode, updateHistory })(InputScreen);

@@ -19,6 +19,7 @@ export function cleanCode(code, expressionLocations) {
 }
 
 export function parseCode(code) {
+  console.log('parsing: ', code)
   // check to make sure this is valid javascript - return error code if not
   try {
     eval(code);
@@ -42,7 +43,7 @@ export function parseCode(code) {
       try { // try/catch this just in case
         result += JSON.stringify(eval(newProgram));
       } catch (err) {
-        console.log(err)
+        console.error(err);
       }
     }
     result += '\n';

@@ -1,12 +1,10 @@
 import jsdom from 'jsdom';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { shallow, mount } from 'enzyme';
-import reducers from '../src/reducers';
 
-export const localStorage = storageMock();
+/**
+basic configuration as recommended by enzyme/airbnb:
+ https://github.com/airbnb/enzyme/blob/master/docs/guides/jsdom.md
+*/
+const localStorage = storageMock();
 const exposedProperties = ['window', 'navigator', 'document'];
 global.document = jsdom.jsdom('');
 global.window = document.defaultView;
@@ -20,19 +18,6 @@ Object.keys(document.defaultView).forEach((property) => {
 global.navigator = {
   userAgent: 'node.js',
 };
-
-
-export function sRender(ComponentClass, props = {}, state={}, store={}) {
-  return shallow(<ComponentClass {...props} store={store} />);
-}
-
-export function fRender(ComponentClass, props = {}, state = {}) {
-  return mount(
-    <Provider store={createStore(reducers, state)}>
-      <ComponentClass {...props} />
-    </Provider>
-  );
-}
 
 function storageMock() {
   const storage = {};
@@ -53,7 +38,7 @@ function storageMock() {
     key(i) {
       const keys = Object.keys(storage);
       return keys[i] || null;
-    }
+    },
   };
 }
 
